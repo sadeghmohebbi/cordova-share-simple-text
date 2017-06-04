@@ -32,6 +32,7 @@ public class ShareText extends CordovaPlugin {
     if(action.equals(KEY_SHARE)) {
       try {
         String phrase = args.getString(0);
+        Log.d(TAG, phrase);
       } catch(JSONException e) {
         Log.i(TAG, e.getLocalizedMessage());
         continue;
@@ -47,8 +48,6 @@ public class ShareText extends CordovaPlugin {
       } catch (Exception e) {
         Log.i(TAG, e.getLocalizedMessage())
       }
-
-      Log.d(TAG, phrase);
     }
     return true;
   }
