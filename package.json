@@ -2,11 +2,10 @@
   "name": "cordova-plugin-template",
   "version": "1.0.0",
   "cordova": {
-    "id": "cordova-plugin-template",
+    "id": "cordova-share-simple-text",
     "platforms": [
-      "android",
-      "ios",
+      "android"
     ]
   },
-  "description": "A starting point for a Cordova Plugin"
+  "description": "The cordova (ionic) plugin for sharing simple text"
 }
