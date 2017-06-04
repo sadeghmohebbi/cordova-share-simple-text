@@ -20,6 +20,8 @@ public class ShareText extends CordovaPlugin {
   private static final String KEY_SHARE = "share";
   private static final String TAG = "ShareText";
 
+  public ShareText() {}
+
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
 
@@ -28,13 +30,26 @@ public class ShareText extends CordovaPlugin {
 
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if(action.equals(KEY_SHARE)) {
-      String phrase = args.getString(0);
-      //TODO share intent
+      try {
+        String phrase = args.getString(0);
+      } catch(JSONException e) {
+        Log.i(TAG, e.getLocalizedMessage());
+        continue;
+      }
 
-      // Echo back the first argument
+      try {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        goToOffline.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra(Intent.EXTRA_TEXT, phrase);
+        intent.setPackage(this.cordova.getActivity().getApplicationContext().getPackageName());
+        this.cordova.startActivity(Intent.createChooser(intent, "Share this text via"));
+      } catch (Exception e) {
+        Log.i(TAG, e.getLocalizedMessage())
+      }
+
       Log.d(TAG, phrase);
     }
     return true;
   }
-
 }
