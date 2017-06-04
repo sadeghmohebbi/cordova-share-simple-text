@@ -1,0 +1,1 @@
+# cordova-share-simple-text
