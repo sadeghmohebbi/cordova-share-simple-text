@@ -50,7 +50,7 @@ public class ShareText extends CordovaPlugin {
 
                     cordova.getActivity().runOnUiThread(new Runnable() {
                       public void run() {
-                        mycordova.startActivityForResult(plugin, Intent.createChooser(sendIntent, "send text via"), 0);
+                        mycordova.startActivityForResult(plugin, Intent.createChooser(sendIntent, "share text via"), 0);
                       }
                     });
 
