@@ -16,8 +16,14 @@ import android.util.Log;
 
 
 public class ShareText extends CordovaPlugin {
+
     private static final String KEY_SHARE = "share";
     private static final String TAG = "ShareText";
+
+    private static final int ACTIVITY_CODE_SEND__BOOLRESULT = 1;
+    private static final int ACTIVITY_CODE_SEND__OBJECT = 2;  
+
+    final CordovaPlugin plugin = this;
 
     public ShareText() {}
 
@@ -35,13 +41,19 @@ public class ShareText extends CordovaPlugin {
 
             if (phrase != null) {
                 try {
-                    Context context = this.cordova.getActivity().getApplicationContext();
+                    // Context context = this.cordova.getActivity().getApplicationContext();
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("text/plain");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     intent.putExtra(Intent.EXTRA_TEXT, phrase);
                     intent.setPackage(this.cordova.getActivity().getApplicationContext().getPackageName());
-                    context.startActivity(Intent.createChooser(intent, "Share this text via"));
+
+                    cordova.getActivity().runOnUiThread(new Runnable() {
+                      public void run() {
+                        mycordova.startActivityForResult(plugin, Intent.createChooser(sendIntent, chooserTitle), 0);
+                      }
+                    });
+
                 } catch (Exception e) {
                     Log.i(TAG, e.getLocalizedMessage());
                 }
